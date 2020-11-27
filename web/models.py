@@ -16,6 +16,10 @@ class BankAccount(models.Model):
     current_balance = models.DecimalField(u"موجودی", max_digits=20, decimal_places=2, default=0)
     desc = models.CharField(u"توضیحات", max_length=50, null=True, blank=True)
 
+    class Meta:
+        verbose_name = "شماره حساب"
+        verbose_name_plural = "شماره حسابهای بانکی"
+
     def __str__(self):
         return ("%s" % (self.account_number))
 
@@ -49,7 +53,7 @@ class Expens(models.Model):
         bank_account = BankAccount.objects.get(pk=self.from_bank_account.id)
         bank_account.current_balance -= self.amount
         bank_account.save()
-        
+
         super().save(*args, **kwargs)
 
     def __str__(self):
