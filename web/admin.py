@@ -5,16 +5,21 @@ admin.site.register(ExpensCategory)
 admin.site.register(IncomeCategory)
 
 
-def format_amount_to_thous_sep(obj):
+def format_to_thous_sep(obj):
     return '{:,}'.format(round(obj.amount,0))
-format_amount_to_thous_sep.short_description = "مبلغ (ریال)"
+format_to_thous_sep.short_description = "مبلغ (ریال)"
 
 
 @admin.register(Expens)
 class ExpensAdmin(admin.ModelAdmin):
-    list_display = ('category', 'desc', format_amount_to_thous_sep, 'date',)
+    list_display = ('category', 'desc', format_to_thous_sep, 'date',)
+    list_filter = ('category',)
+    ordering = ['-date'] 
 
 
 @admin.register(Income)
 class IncomeAdmin(admin.ModelAdmin):
-    list_display = ('category', 'desc', format_amount_to_thous_sep, 'date',)
+    list_display = ('category', 'desc', format_to_thous_sep, 'date',)
+    list_filter = ('category',)
+    ordering =['-date']
+
