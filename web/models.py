@@ -7,6 +7,8 @@ BANKS=[
     (3,"تجارت"),
     (4,"مسکن"),
     (5,"ملت"),
+    (0,"کیف پول"),
+
 ]
 class BankAccount(models.Model):
     bank_name = models.IntegerField(u"نام بانک", choices=BANKS)
@@ -22,7 +24,10 @@ class BankAccount(models.Model):
         verbose_name_plural = "شماره حسابهای بانکی"
 
     def __str__(self):
-        return ("%s" % (self.account_number))
+        if self.bank_name == 0:
+            return ("%s" % (self.get_bank_name_display())) # کیف پول
+        else:
+            return ("%s" % (self.account_number))
 
 
 class ExpensCategory(models.Model):
