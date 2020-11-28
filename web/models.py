@@ -75,7 +75,7 @@ class IncomeCategory(models.Model):
 
 class Income(models.Model):
     category = models.ForeignKey(IncomeCategory, verbose_name = "گروه درآمد", on_delete=models.CASCADE,)
-    from_bank_account = models.ForeignKey(BankAccount, verbose_name="واریز به حساب", on_delete=models.CASCADE)
+    to_bank_account = models.ForeignKey(BankAccount, verbose_name="واریز به حساب", on_delete=models.CASCADE)
     desc = models.CharField("شرح درآمد", max_length=200)
     amount = models.DecimalField("مبلغ درآمد", max_digits=20, decimal_places=2)
     date = models.DateField("تاریخ")
