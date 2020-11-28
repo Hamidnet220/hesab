@@ -1,4 +1,5 @@
 from django.db import models
+from django import utils
 
 BANKS=[
     (1,"انصار"),
@@ -42,7 +43,7 @@ class Expens(models.Model):
     from_bank_account = models.ForeignKey(BankAccount, verbose_name="برداشت از حساب", on_delete=models.CASCADE)
     desc = models.CharField("شرح هزینه", max_length=200)
     amount = models.DecimalField("مبلغ", max_digits=20, decimal_places=2)
-    date = models.DateField("تاریخ")
+    date = models.DateField("تاریخ", default=utils.timezone.now)
     
     class Meta:
         order_with_respect_to = 'date'
@@ -78,7 +79,7 @@ class Income(models.Model):
     to_bank_account = models.ForeignKey(BankAccount, verbose_name="واریز به حساب", on_delete=models.CASCADE)
     desc = models.CharField("شرح درآمد", max_length=200)
     amount = models.DecimalField("مبلغ درآمد", max_digits=20, decimal_places=2)
-    date = models.DateField("تاریخ")
+    date = models.DateField("تاریخ", default=utils.timezone.now)
     
     class Meta:
         order_with_respect_to = 'date'
