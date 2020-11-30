@@ -3,7 +3,7 @@ from .models import BankAccount,Expens
 from django.http import HttpResponse
 
 def get_bank_account_report(request, bank_acc_id):
-    expenses = Expens.objects.filter(from_bank_account__id = bank_acc_id)
+    expenses = Expens.objects.filter(from_bank_account__id = bank_acc_id).order_by('-date')
     expens_str = ""
     sum_amoun = 0
     expens_str += str(BankAccount.objects.get(id = bank_acc_id))+ '<br>'
