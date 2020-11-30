@@ -1,15 +1,24 @@
 from django.contrib import admin
+
+from jalali_date.admin import ModelAdminJalaliMixin
+
+from jalali_date import date2jalali
+
 from .models import BankAccount, Expens, Income, IncomeCategory, ExpensCategory
+
 
 admin.site.register(ExpensCategory)
 admin.site.register(IncomeCategory)
 
 
+def convert_date_to_jalali(obj):
+    return date2jalali(obj.date)
+convert_date_to_jalali.short_description = "تاریخ"
 
 
 @admin.register(Expens)
-class ExpensAdmin(admin.ModelAdmin):
-    list_display = ('category', 'desc', 'format_to_thous_sep', 'date',)
+class ExpensAdmin(ModelAdminJalaliMixin, admin.ModelAdmin):
+    list_display = ('category', 'desc', 'format_to_thous_sep', convert_date_to_jalali,)
     list_filter = ('category',)
     ordering = ['-date'] 
     actions = ['delete_expens']
@@ -29,10 +38,11 @@ class ExpensAdmin(admin.ModelAdmin):
 
 @admin.register(Income)
 class IncomeAdmin(admin.ModelAdmin):
-    list_display = ('category', 'desc', 'format_to_thous_sep', 'date',)
+    list_display = ('category', 'desc', 'format_to_thous_sep', convert_date_to_jalali,)
     list_filter = ('category',)
     ordering =['-date']
     actions = ['delete_income']
+    search_field = ['desc']
 
     def format_to_thous_sep(self, obj):
         return '{:,}'.format(round(obj.amount,0))
@@ -61,3 +71,4 @@ class BankAccountAdmin(admin.ModelAdmin):
     def format_to_thous_sep(self, obj):
         return '{:,}'.format(round(obj.current_balance,0))
     format_to_thous_sep.short_description = "موجودی (ریال)"
+
