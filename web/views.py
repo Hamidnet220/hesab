@@ -3,7 +3,7 @@ from django.db.models import Sum, F
 from django.shortcuts import render
 from django.http import HttpResponse
 
-from .models import BankAccount,Expens, Transaction
+from .models import BankAccount, Transaction
 
 
 
