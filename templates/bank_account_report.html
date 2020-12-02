@@ -8,18 +8,21 @@
         <table>
             <tr>
                 <th>ردیف</th>
-                <th>شرح</th>
+                <th>نوع تراکنش</th>
+                <th>شرح تراکنش</th>
                 <th>مبلغ</th>
                 <th>مانده</th>
                 <th>تاریخ</th>
             </tr>
             
-            {% for expens in expenses %}
+            {% for tranaction,remain in trans %}
               <tr>
                   <td>{{forloop.counter}}</td>
-                  <td>{{expens.desc}}</td>
-                  <td>{{expens.amount|floatformat:"0"|intcomma}}</td>
-                  <td>{{expens.date}}</td>
+                  <td>{{tranaction.get_transaction_type_display}}</td>
+                  <td>{{tranaction.description}}</td>
+                  <td>{{tranaction.amount|floatformat:"0"|intcomma}}</td>
+                  <td>{{remain|floatformat:"0"|intcomma}}</td>
+                  <td>{{tranaction.date}}</td>
               </tr>
             {% endfor %}
 
