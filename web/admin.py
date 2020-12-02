@@ -4,17 +4,23 @@ from jalali_date.admin import ModelAdminJalaliMixin
 
 from jalali_date import date2jalali
 
-from .models import BankAccount, Expens, Income, IncomeCategory, ExpensCategory
+from .models import BankAccount, Expens, Income, IncomeCategory, ExpensCategory, Transaction, TransCategory
 
 
 admin.site.register(ExpensCategory)
 admin.site.register(IncomeCategory)
+admin.site.register(TransCategory)
 
 
 def convert_date_to_jalali(obj):
     return date2jalali(obj.date)
 convert_date_to_jalali.short_description = "تاریخ"
 
+@admin.register(Transaction)
+class TransactionAdmin(ModelAdminJalaliMixin, admin.ModelAdmin):
+    list_display = ['bank_account','description','amount','trans_category', convert_date_to_jalali,
+    'transaction_type']
+    list_filter=['bank_account','trans_category']
 
 @admin.register(Expens)
 class ExpensAdmin(ModelAdminJalaliMixin, admin.ModelAdmin):
