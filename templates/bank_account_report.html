@@ -1,37 +1,35 @@
+{% extends 'base.html' %}
 {% load humanize %}
-<!DOCTYPE html>
-<html lang="fa" dir="rtl">
-    <head>
-        <title>گزارش حساب بانکی</title>
-    </head>
-    <body>
-        <table>
-            <tr>
-                <th>ردیف</th>
-                <th>نوع تراکنش</th>
-                <th>شرح تراکنش</th>
-                <th>مبلغ</th>
-                <th>مانده</th>
-                <th>تاریخ</th>
-            </tr>
-            
-            {% for tranaction,remain in trans %}
-              <tr>
-                  <td>{{forloop.counter}}</td>
-                  <td>{{tranaction.get_transaction_type_display}}</td>
-                  <td>{{tranaction.description}}</td>
-                  <td>{{tranaction.amount|floatformat:"0"|intcomma}}</td>
-                  <td>{{remain|floatformat:"0"|intcomma}}</td>
-                  <td>{{tranaction.date}}</td>
-              </tr>
-            {% endfor %}
 
-            <tr>
-                <td> جمع</td>
-                <td>{{ total_amount.amount__sum|intcomma }}</td>
-            </tr>
-            
-        </table>
-        
-    </body>
-</html>
+{% block title %} گزارش حساب بانکی {% endblock title %}
+
+{% block content %}
+<table>
+    <tr>
+        <th>ردیف</th>
+        <th>نوع تراکنش</th>
+        <th>شرح تراکنش</th>
+        <th>مبلغ</th>
+        <th>مانده</th>
+        <th>تاریخ</th>
+    </tr>
+
+    {% for tranaction,remain in trans %}
+    <tr>
+        <td>{{forloop.counter}}</td>
+        <td>{{tranaction.get_transaction_type_display}}</td>
+        <td>{{tranaction.description}}</td>
+        <td>{{tranaction.amount|floatformat:"0"|intcomma}}</td>
+        <td>{{remain|floatformat:"0"|intcomma}}</td>
+        <td>{{tranaction.date}}</td>
+    </tr>
+    {% endfor %}
+
+    <tr>
+        <td> جمع</td>
+        <td>{{ total_amount.amount__sum|intcomma }}</td>
+    </tr>
+
+</table>
+
+{% endblock content %}
