@@ -12,9 +12,8 @@ def get_bank_account_report(request, bank_acc_id = 1):
     initial_balance = BankAccount.objects.get(id=bank_acc_id).initial_balance
     
     trans = Transaction.objects.filter(bank_account__id = bank_acc_id).order_by('date')
-    
+
     remains = []
-    print(initial_balance)
     curren_balance = initial_balance
     for tran in trans:
         if tran.transaction_type == 1:
@@ -24,16 +23,21 @@ def get_bank_account_report(request, bank_acc_id = 1):
             curren_balance = curren_balance - tran.amount
             remains.append(curren_balance)
 
-    print(trans)
-    print(remains)
+    total_amount = trans.filter(transaction_type=1).aggregate(Sum('amount'))
+
     trans= zip(trans,remains)
     
+    
+
 
     contents = {
         'trans' : trans,
+        'total_amount' : total_amount,
     }
 
     return render(request,"bank_account_report.html", contents)
+
+
 
 
 def transfer_amount(request):
