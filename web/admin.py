@@ -41,11 +41,11 @@ class TransactionAdmin(ModelAdminJalaliMixin, admin.ModelAdmin):
 
 
     def save_model(self, request, obj, form, change):
-        bank_account = obj.to_bank_account
+        bank_account = obj.bank_account
         if obj.transaction_type == 1:
-            bank_acc.current_balance += obj.amount
+            bank_account.current_balance += obj.amount
         elif obj.transaction_type == 2:
-            bank_acc.current_balance -= obj.amount
+            bank_account.current_balance -= obj.amount
 
         bank_account.save()
         super().save_model(request, obj, form, change)
