@@ -55,6 +55,7 @@ class TransactionAdmin(ModelAdminJalaliMixin, admin.ModelAdmin):
 class BankAccountAdmin(admin.ModelAdmin):
     list_display = ('bank_name', 'branch_name', 'account_number','format_to_thous_sep')
     ordering =['bank_name']
+    readonly_fields =['current_balance']
 
     def format_to_thous_sep(self, obj):
         return '{:,}'.format(round(obj.current_balance,0))
