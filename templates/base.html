@@ -1,12 +1,28 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
     <head>
-        {% block style%} {% endblock style %}
+        {% block base_style %}
+            <style>
+                table, th, td{
+                border: solid 1px cadetblue;
+                border-collapse: collapse;
+                text-align: center;
+            }
+                
+            </style>
+
+            {% block extra_style %} {% endblock extra_style %}
+
+        {% endblock base_style %}
+
         <title>{% block title %} {% endblock title %}</title>
+
     </head>
+
     <body>
 
         {%block content %} {%endblock content %}
         
     </body>
+
 </html>
