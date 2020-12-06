@@ -39,9 +39,11 @@ def get_bank_account_report(request, bank_acc_id = 1):
 
 def get_category_expens_amount(request):
     expens_cat = TransCategory.objects.filter(category_type=1).values('title').annotate(cat_sum=Sum('transaction__amount'))
+    total_amount = expens_cat.aggregate(Sum('cat_sum'))
     
     contents = {
         'expens_cat' : expens_cat,
+        'total_amount':total_amount,
     }
 
     return render(request,'expens_category_report.html',contents)
