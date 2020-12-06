@@ -5,7 +5,8 @@ from django.http import HttpResponse
 
 from .models import BankAccount, Transaction, TransCategory
 
-
+def home_view(request):
+    return render(request,'home.html',{})
 
 def get_bank_account_report(request, bank_acc_id = 1):
 

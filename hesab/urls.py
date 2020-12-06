@@ -18,7 +18,7 @@ from django.urls import path, include
 from web import views
 
 urlpatterns = [
-    path('', views.get_bank_account_report),
+    path('', views.home_view, name='home'),
     path('transfer/',views.transfer_amount),
     path('admin/', admin.site.urls),
     path('reports/', include('web.urls')),

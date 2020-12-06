@@ -1,0 +1,6 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <a href="{% url 'bank_report' bank_acc_id=1 %}">گزارش تراکنش های بانکی</a><br>
+    <a href="{% url 'category_report' %}">لیست هزینه های گروه ها</a>
+{% endblock content %}
