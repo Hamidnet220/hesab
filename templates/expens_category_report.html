@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% load humanize %}
+
+{% block title %} لیست هزینه ها به تفکیک گروه {% endblock title %}
+
+{% block content %}
+<table>
+    {% for item in expens_cat %}
+    <tr>
+        <td>{{forloop.counter}}</td>
+        <td>{{item.title}}</td>
+        <td>{{item.cat_sum|floatformat:0|intcomma}}</td>
+    </tr>
+{% endfor %}
+
+</table>
+   
+{% endblock content %}

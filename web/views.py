@@ -3,7 +3,7 @@ from django.db.models import Sum, F
 from django.shortcuts import render
 from django.http import HttpResponse
 
-from .models import BankAccount, Transaction
+from .models import BankAccount, Transaction, TransCategory
 
 
 
@@ -37,6 +37,15 @@ def get_bank_account_report(request, bank_acc_id = 1):
 
     return render(request,"bank_account_report.html", contents)
 
+def get_category_expens_amount(request):
+    expens_cat = TransCategory.objects.filter(category_type=1).values('title').annotate(cat_sum=Sum('transaction__amount'))
+    
+    contents = {
+        'expens_cat' : expens_cat,
+    }
+
+    return render(request,'expens_category_report.html',contents)
+    
 
 
 
