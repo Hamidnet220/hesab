@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load humanize %}
+{% load jalali_tags %}
 
 {% block title %} گزارش حساب بانکی {% endblock title %}
 
@@ -21,7 +22,7 @@
         <td>{{tranaction.description}}</td>
         <td>{{tranaction.amount|floatformat:"0"|intcomma}}</td>
         <td>{{remain|floatformat:"0"|intcomma}}</td>
-        <td>{{tranaction.date}}</td>
+        <td>{{tranaction.date|to_jalali:'%y/%m/%d - %H:%M'}}</td>
     </tr>
     {% endfor %}
 
