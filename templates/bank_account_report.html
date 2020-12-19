@@ -4,33 +4,56 @@
 
 {% block title %} گزارش حساب بانکی {% endblock title %}
 
+
+
+
 {% block content %}
-<table>
-    <tr>
-        <th>ردیف</th>
-        <th>نوع تراکنش</th>
-        <th>شرح تراکنش</th>
-        <th>مبلغ</th>
-        <th>مانده</th>
-        <th>تاریخ</th>
-    </tr>
+<a href="{% url 'home' %}">صفحه اصلی</a>
+<form action="" method="POST"> {% csrf_token %}
+    <label for="bank_accounts"> گزارش شماره حساب های بانکی</label>
+    <select name="bank_accounts">
+       {% for bank_account in bank_accounts %}
+          <option>{{bank_account}}</option>
+        {% endfor %}
+    </select>
+    <label for="start-date">تاریخ شروع</label>
+    <input type="text" name="start-date">
+    <lable for="end-date">تاریخ پایان</lable>
+    <input type="text" name="end-date">
+    <button type="submit" value="OK">نمایش</button>
+</form>
+<br>
+<br>
 
-    {% for tranaction,remain in trans %}
-    <tr>
-        <td>{{forloop.counter}}</td>
-        <td>{{tranaction.get_transaction_type_display}}</td>
-        <td>{{tranaction.description}}</td>
-        <td>{{tranaction.amount|floatformat:"0"|intcomma}}</td>
-        <td>{{remain|floatformat:"0"|intcomma}}</td>
-        <td>{{tranaction.date|to_jalali:'%y/%m/%d - %H:%M'}}</td>
-    </tr>
-    {% endfor %}
+{% if trans %}
 
-    <tr>
-        <td> جمع</td>
-        <td>{{ total_amount.amount__sum|intcomma }}</td>
-    </tr>
+    <table>
+        <tr>
+            <th>ردیف</th>
+            <th>نوع تراکنش</th>
+            <th>شرح تراکنش</th>
+            <th>مبلغ</th>
+            <th>مانده</th>
+            <th>تاریخ</th>
+        </tr>
 
-</table>
+        {% for tranaction,remain in trans %}
+        <tr>
+            <td>{{forloop.counter}}</td>
+            <td>{{tranaction.get_transaction_type_display}}</td>
+            <td>{{tranaction.description}}</td>
+            <td>{{tranaction.amount|floatformat:"0"|intcomma}}</td>
+            <td>{{remain|floatformat:"0"|intcomma}}</td>
+            <td>{{tranaction.date|to_jalali:'%y/%m/%d - %H:%M'}}</td>
+        </tr>
+        {% endfor %}
+
+        <tr>
+            <td> جمع</td>
+            <td>{{ total_amount.amount__sum|intcomma }}</td>
+        </tr>
+
+    </table>
+{% endif %}
 
 {% endblock content %}
