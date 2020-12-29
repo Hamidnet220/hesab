@@ -22,27 +22,34 @@
     <input type="text" name="end-date">
     <button type="submit" value="OK">نمایش</button>
 </form>
+
+<a href="{% url 'add_transaction' %}" class='button'>تراکنش جدید</a>
 <br>
 <br>
 
 {% if trans %}
 
-    <table>
-        <tr>
+    <table class="table table-striped">
+        <thead class="table-dark">
             <th>ردیف</th>
             <th>نوع تراکنش</th>
             <th>شرح تراکنش</th>
             <th>مبلغ</th>
             <th>مانده</th>
             <th>تاریخ</th>
-        </tr>
+        </thead>
 
         {% for tranaction,remain in trans %}
         <tr>
             <td>{{forloop.counter}}</td>
             <td>{{tranaction.get_transaction_type_display}}</td>
             <td>{{tranaction.description}}</td>
-            <td>{{tranaction.amount|floatformat:"0"|intcomma}}</td>
+            {% if tranaction.transaction_type == 2 %}
+                <td class="text-danger"> 
+            {% else %} 
+                <td class="text-success">
+            {% endif %}
+            {{tranaction.amount|floatformat:"0"|intcomma}}</td>
             <td>{{remain|floatformat:"0"|intcomma}}</td>
             <td>{{tranaction.date|to_jalali:'%y/%m/%d - %H:%M'}}</td>
         </tr>
