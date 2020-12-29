@@ -22,4 +22,5 @@ urlpatterns = [
     path('transfer/',views.transfer_amount),
     path('admin/', admin.site.urls),
     path('reports/', include('web.urls')),
+    path('transaction/',include('web.urls')),
 ]

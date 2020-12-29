@@ -1,11 +1,13 @@
 from django.db.models import Sum, F
-from django.shortcuts import render,redirect
+from django.shortcuts import render,redirect, HttpResponseRedirect
 from django.http import HttpResponse
 
 from jdatetime import JalaliToGregorian
 from datetime import date
 
 from .models import BankAccount, Transaction, TransCategory
+
+from .forms import AddTransactionForm
 
 def home_view(request):
     
@@ -78,6 +80,16 @@ def get_category_expens_amount(request):
     return render(request,'expens_category_report.html',contents)
     
 
+def add_transactin_view(request):
+    
+    if request.method == 'POST':
+        form = AddTransactionForm(request.POST)
+        if form.is_valid():
+            form.save()
+        return HttpResponseRedirect('')
+    else:
+        form = AddTransactionForm()
+        return render(request,'add_transaction.html',{'form':form})
 
 
 def transfer_amount(request):
